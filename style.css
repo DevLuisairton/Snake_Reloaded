@@ -1,0 +1,367 @@
+:root {
+  --primary-color: #00f3ff;
+  --secondary-color: #ff00f7;
+  --bg-color: #0a0a1a;
+  --grid-color: #1a1a2a;
+  --text-color: #ffffff;
+  --food-color: #ffcc00;
+  --obstacle-color: #ff3333;
+  --powerup-color: #33ff33;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Orbitron', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+@font-face {
+  font-family: 'Orbitron';
+  src: url('https://cdnjs.cloudflare.com/ajax/libs/orbitron/1.0.0/orbitron.min.css');
+}
+
+.game-container {
+  position: relative;
+  margin-top: 20px;
+  box-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--secondary-color);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#game-canvas {
+  background-color: var(--grid-color);
+  display: block;
+}
+
+.header {
+  text-align: center;
+  padding: 20px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.7);
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 3rem;
+  margin: 0;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.hud {
+  display: flex;
+  justify-content: space-between;
+  width: 600px;
+  margin: 10px auto;
+  padding: 10px;
+  background-color: rgba(26, 26, 42, 0.7);
+  border-radius: 10px;
+  box-shadow: 0 0 10px var(--primary-color);
+}
+
+.score, .level, .time, .mode {
+  font-size: 18px;
+  color: var(--primary-color);
+  text-shadow: 0 0 5px var(--primary-color);
+}
+
+.menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(10, 10, 26, 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.menu-title {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+}
+
+.button {
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  border: none;
+  color: var(--bg-color);
+  padding: 12px 24px;
+  margin: 10px;
+  font-size: 16px;
+  font-family: 'Orbitron', sans-serif;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  font-weight: bold;
+  min-width: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 15px var(--primary-color), 0 0 30px var(--secondary-color);
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+  transform: rotate(30deg);
+  transition: all 0.3s ease;
+}
+
+.button:hover::after {
+  left: 100%;
+  transition: all 0.7s ease;
+}
+
+.instructions {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: rgba(26, 26, 42, 0.5);
+  border-radius: 10px;
+  max-width: 500px;
+  text-align: center;
+}
+
+.key {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: var(--bg-color);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  margin: 0 5px;
+}
+
+.game-over {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+  display: none;
+}
+
+.game-over h2 {
+  font-size: 3rem;
+  color: var(--secondary-color);
+  text-shadow: 0 0 10px var(--secondary-color);
+  margin-bottom: 20px;
+}
+
+.power-up-indicator {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(26, 26, 42, 0.7);
+  border-radius: 10px;
+  padding: 5px 10px;
+  display: none;
+}
+
+.pulse {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+      transform: scale(1);
+      opacity: 1;
+  }
+  50% {
+      transform: scale(1.05);
+      opacity: 0.7;
+  }
+  100% {
+      transform: scale(1);
+      opacity: 1;
+  }
+}
+
+.progress-bar {
+  width: 100%;
+  height: 5px;
+  background-color: var(--grid-color);
+  margin-top: 5px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background-color: var(--primary-color);
+  width: 100%;
+  transition: width 0.1s linear;
+}
+
+.themes-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.theme-option {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: rgba(26, 26, 42, 0.5);
+  width: 100px;
+  text-align: center;
+}
+
+.theme-option:hover {
+  background-color: rgba(0, 243, 255, 0.2);
+}
+
+.theme-icon {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  animation: float 15s infinite linear;
+  opacity: 0.5;
+}
+
+@keyframes float {
+  0% {
+      transform: translateY(0) translateX(0) rotate(0deg);
+  }
+  33% {
+      transform: translateY(-30px) translateX(30px) rotate(120deg);
+  }
+  66% {
+      transform: translateY(30px) translateX(-30px) rotate(240deg);
+  }
+  100% {
+      transform: translateY(0) translateX(0) rotate(360deg);
+  }
+}
+
+/* Telas menores que 768px (tablets e celulares) */
+@media (max-width: 768px) {
+  .title {
+    font-size: 2rem; /* Reduz o tamanho do título */
+  }
+
+  .hud {
+    width: 90%; /* Ajusta a largura do HUD */
+    flex-wrap: wrap; /* Permite que os itens do HUD quebrem em várias linhas */
+  }
+
+  .score, .level, .time, .mode {
+    font-size: 16px; /* Reduz o tamanho da fonte dos itens do HUD */
+    margin: 5px; /* Adiciona margem entre os itens */
+  }
+
+  .button {
+    min-width: 150px; /* Reduz o tamanho mínimo dos botões */
+    padding: 10px 20px; /* Ajusta o padding dos botões */
+    height: 100px;
+  }
+
+  .instructions {
+    max-width: 90%; /* Ajusta a largura das instruções */
+  }
+
+  .game-container {
+    width: 90%; /* Ajusta a largura do container do jogo */
+  }
+
+  #game-canvas {
+    width: 100%; /* Faz o canvas ocupar 100% da largura do container */
+    height: auto; /* Mantém a proporção do canvas */
+  }
+}
+
+/* Telas menores que 480px (celulares pequenos) */
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.5rem; /* Reduz ainda mais o tamanho do título */
+  }
+
+  .hud {
+    flex-direction: column; /* Alinha os itens do HUD verticalmente */
+    align-items: center; /* Centraliza os itens do HUD */
+  }
+
+  .button {
+    min-width: 120px; /* Reduz ainda mais o tamanho mínimo dos botões */
+    padding: 8px 16px; /* Ajusta o padding dos botões */
+  }
+
+  .menu-title {
+    font-size: 2rem; /* Reduz o tamanho do título do menu */
+  }
+
+  .instructions {
+    font-size: 14px; /* Reduz o tamanho da fonte das instruções */
+  }
+}
+
+/* Telas menores que 320px (celulares muito pequenos) */
+@media (max-width: 320px) {
+  .title {
+    font-size: 1.2rem; /* Reduz ainda mais o tamanho do título */
+  }
+
+  .button {
+    min-width: 100px; /* Reduz ainda mais o tamanho mínimo dos botões */
+    padding: 6px 12px; /* Ajusta o padding dos botões */
+  }
+
+  .menu-title {
+    font-size: 1.5rem; /* Reduz ainda mais o tamanho do título do menu */
+  }
+
+  .instructions {
+    font-size: 12px; /* Reduz ainda mais o tamanho da fonte das instruções */
+  }
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Reloaded</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="header">
+        <h1 class="title">Snake Reloaded</h1>
+    </div>
+
+    <div class="hud">
+        <div class="score">Pontuação: <span id="score">0</span></div>
+        <div class="mode">Modo: <span id="mode-display">Clássico</span></div>
+        <div class="level">Level: <span id="level">1</span></div>
+        <div class="time">Tempo: <span id="time">00:00</span></div>
+    </div>
+
+    <div class="game-container">
+        <canvas id="game-canvas" width="600" height="600"></canvas>
+        
+        <div id="menu" class="menu">
+            <h2 class="menu-title">Snake Reloaded</h2>
+            <button class="button" id="classic-btn">Modo Clássico</button>
+            <button class="button" id="survival-btn">Modo Sobrevivência</button>
+            <button class="button" id="challenge-btn">Modo Desafio</button>
+            <button class="button" id="evolution-btn">Modo Evolução</button>
+            <button class="button" id="theme-btn">Temas</button>
+            
+            <div class="instructions">
+                <p>Use as teclas <span class="key">↑</span> <span class="key">↓</span> <span class="key">←</span> <span class="key">→</span> para controlar a cobra</p>
+                <p>Pressione <span class="key">P</span> para pausar o jogo</p>
+                <p>Pressione <span class="key">ESC</span> para voltar ao menu</p>
+            </div>
+        </div>
+
+        <div id="themes-menu" class="menu" style="display: none;">
+            <h2 class="menu-title">Selecione um Tema</h2>
+            <div class="themes-container">
+                <div class="theme-option" data-theme="neon">
+                    <div class="theme-icon">🌃</div>
+                    <div>Neon</div>
+                </div>
+                <div class="theme-option" data-theme="cyberpunk">
+                    <div class="theme-icon">🏙️</div>
+                    <div>Cyberpunk</div>
+                </div>
+                <div class="theme-option" data-theme="forest">
+                    <div class="theme-icon">🌲</div>
+                    <div>Floresta</div>
+                </div>
+                <div class="theme-option" data-theme="desert">
+                    <div class="theme-icon">🏜️</div>
+                    <div>Deserto</div>
+                </div>
+                <div class="theme-option" data-theme="space">
+                    <div class="theme-icon">🌌</div>
+                    <div>Espaço</div>
+                </div>
+            </div>
+            <button class="button" id="back-btn">Voltar</button>
+        </div>
+
+        <div id="game-over" class="game-over">
+            <h2>Game Over</h2>
+            <div id="final-score">Pontuação: 0</div>
+            <button class="button" id="restart-btn">Jogar Novamente</button>
+            <button class="button" id="menu-btn">Menu Principal</button>
+        </div>
+
+        <div id="power-up-indicator" class="power-up-indicator">
+            <div id="power-up-name">Power-up</div>
+            <div class="progress-bar">
+                <div id="power-up-progress" class="progress"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
